@@ -5,66 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bazar Lizie - Calculadora</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #000; }
-        
-        /* Estilização para garantir que o SVG fique preto e responsivo */
-        .logo-container svg {
-            width: auto;
-            height: 40px; /* Ajuste a altura conforme necessário */
-            margin: 0 auto;
-            display: block;
-            fill: #000000; /* Força a cor preta no SVG */
-        }
-
-        .product-row { border-bottom: 1px solid #eeeeee; }
-        .btn-action { transition: all 0.2s; border: 1px solid #000; }
-        .btn-action:active { transform: scale(0.9); background-color: #000; color: #fff; }
+        body { font-family: 'Inter', sans-serif; }
+        .product-card { transition: all 0.2s ease; }
+        .product-card:active { transform: scale(0.98); }
     </style>
 </head>
-<body class="pb-32">
+<body class="bg-white pb-32">
 
-    <!-- HEADER -->
-    <header class="py-10 px-6 text-center bg-white border-b border-gray-100">
-        <div class="logo-container mb-2">
-            
-            <!-- vvv COLE O CÓDIGO DO SEU SVG AQUI vvv -->
-            <svg viewBox="0 0 100 20">
-                <text x="0" y="15" font-family="serif" font-weight="bold" font-size="16">LIZIE</text>
-            </svg>
-            <!-- ^^^ COLE O CÓDIGO DO SEU SVG AQUI ^^^ -->
-
-        </div>
-        <p class="text-[10px] uppercase tracking-[0.5em] text-gray-400 font-light">Calculadora de Compras</p>
+    <!-- HEADER COM LOGO -->
+    <header class="bg-black text-white py-8 px-6 text-center shadow-xl">
+        <!-- Substitua 'logo.png' pelo nome do arquivo da imagem que você salvou -->
+        <img src="logo.png" alt="Lizie" class="h-12 mx-auto mb-2 filter invert brightness-200">
+        <p class="text-xs uppercase tracking-[0.3em] opacity-70 font-light">Calculadora de Compras</p>
     </header>
 
-    <!-- LISTA DE PRODUTOS -->
-    <main class="max-w-md mx-auto px-4" id="lista-produtos">
-        <!-- Gerado via JS -->
+    <main class="p-6 max-w-md mx-auto space-y-4" id="lista-produtos">
+        <!-- Os produtos serão inseridos aqui pelo JavaScript -->
     </main>
 
-    <!-- RODAPÉ TOTALIZADOR -->
-    <div class="fixed bottom-0 left-0 right-0 bg-black text-white p-6 shadow-2xl flex justify-between items-center">
+    <!-- BARRA DE TOTAL (PRETO E BRANCO) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black text-white p-6 shadow-[0_-10px_20px_rgba(0,0,0,0.1)] flex justify-between items-center">
         <div>
-            <p class="text-[9px] uppercase tracking-widest opacity-60 mb-1">Total da sua sacola</p>
-            <p class="text-3xl font-extrabold" id="valor-total">R$ 0,00</p>
+            <p class="text-[10px] uppercase tracking-widest opacity-60">Total Estimado</p>
+            <p class="text-3xl font-black" id="valor-total">R$ 0,00</p>
         </div>
-        <button onclick="limparCarrinho()" class="text-[10px] font-bold uppercase tracking-widest border border-white/30 px-4 py-2 hover:bg-white hover:text-black transition-all">
+        <button onclick="limparCarrinho()" class="border border-white/30 hover:bg-white hover:text-black px-4 py-2 rounded-none text-xs uppercase tracking-widest transition-all">
             Limpar
         </button>
     </div>
 
     <script>
-        // LISTA DE PRODUTOS (Edite nomes e preços aqui)
+        // LISTA DE PRODUTOS (Edite os nomes e preços aqui)
         const produtos = [
-            { id: 1, nome: "T-Shirt Premium", preco: 49.90 },
-            { id: 2, nome: "Calça Alfaiataria", preco: 139.00 },
-            { id: 3, nome: "Vestido Midi", preco: 159.00 },
-            { id: 4, nome: "Blusa Sedinha", preco: 79.90 },
-            { id: 5, nome: "Saia Plissada", preco: 98.00 },
-            { id: 6, nome: "Acessórios", preco: 25.00 },
-            { id: 7, nome: "Peça Outlet", preco: 35.00 }
+            { id: 1, nome: "Blusa Lizie", preco: 49.90 },
+            { id: 2, nome: "Calça Alfaiataria", preco: 89.90 },
+            { id: 3, nome: "Vestido Midi", preco: 120.00 },
+            { id: 4, nome: "Acessório Gold", preco: 25.00 },
+            { id: 5, nome: "Saia Plissada", preco: 75.00 }
         ];
 
         let carrinho = {};
@@ -72,15 +51,15 @@
         function renderizarProdutos() {
             const container = document.getElementById('lista-produtos');
             container.innerHTML = produtos.map(p => `
-                <div class="product-row py-6 flex justify-between items-center">
+                <div class="product-card bg-white p-5 border-b border-gray-100 flex justify-between items-center">
                     <div>
-                        <h3 class="font-semibold text-xs uppercase tracking-wider text-gray-800">${p.nome}</h3>
-                        <p class="text-gray-400 font-light text-sm mt-0.5">R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
+                        <h3 class="font-bold text-gray-900 uppercase text-sm tracking-tight">${p.nome}</h3>
+                        <p class="text-gray-500 font-light">R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
                     </div>
-                    <div class="flex items-center space-x-6">
-                        <button onclick="alterarQtd(${p.id}, -1)" class="w-8 h-8 flex items-center justify-center btn-action text-xl font-light">-</button>
-                        <span id="qtd-${p.id}" class="w-4 text-center font-bold text-sm">0</span>
-                        <button onclick="alterarQtd(${p.id}, 1)" class="w-8 h-8 bg-black text-white flex items-center justify-center text-xl font-light">+</button>
+                    <div class="flex items-center space-x-4">
+                        <button onclick="alterarQtd(${p.id}, -1)" class="w-8 h-8 border border-black flex items-center justify-center text-xl font-light hover:bg-black hover:text-white transition-colors">-</button>
+                        <span id="qtd-${p.id}" class="w-4 text-center font-bold text-lg">0</span>
+                        <button onclick="alterarQtd(${p.id}, 1)" class="w-8 h-8 bg-black text-white flex items-center justify-center text-xl font-light hover:bg-gray-800 transition-colors">+</button>
                     </div>
                 </div>
             `).join('');
@@ -89,6 +68,7 @@
         function alterarQtd(id, delta) {
             carrinho[id] = (carrinho[id] || 0) + delta;
             if (carrinho[id] < 0) carrinho[id] = 0;
+            
             document.getElementById(`qtd-${id}`).innerText = carrinho[id];
             calcularTotal();
         }
@@ -102,7 +82,7 @@
         }
 
         function limparCarrinho() {
-            if(confirm("Deseja zerar sua calculadora?")) {
+            if(confirm("Deseja limpar todos os itens selecionados?")) {
                 carrinho = {};
                 produtos.forEach(p => {
                     const el = document.getElementById(`qtd-${p.id}`);
