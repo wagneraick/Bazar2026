@@ -10,14 +10,13 @@
         body { font-family: 'Inter', sans-serif; }
         .product-card { transition: all 0.2s ease; }
         .product-card:active { transform: scale(0.98); }
-        /* Esconder scrollbar da barra de categorias */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="bg-white pb-32">
 
-    <!-- HEADER COM LOGO -->
+    <!-- HEADER -->
     <header class="bg-black text-white py-8 px-6 text-center shadow-xl">
         <img src="logo.png" alt="Lizie" class="h-12 mx-auto mb-2">
         <p class="text-xs uppercase tracking-[0.3em] opacity-70 font-light">Calculadora de Compras</p>
@@ -25,26 +24,26 @@
 
     <!-- ÁREA DE BUSCA E FILTROS -->
     <div class="sticky top-0 bg-white z-10 p-4 space-y-4 shadow-sm">
-        <!-- Input de Busca -->
         <div class="relative">
-            <input type="text" id="busca" oninput="filtrarProdutos()" placeholder="Buscar produto..." 
+            <input type="text" id="busca" oninput="filtrarProdutos()" placeholder="Pesquisar produto..." 
                 class="w-full bg-gray-100 border-none rounded-none py-3 px-4 text-sm focus:ring-2 focus:ring-black outline-none transition-all">
         </div>
 
-        <!-- Categorias Recomendadas -->
         <div class="flex overflow-x-auto space-x-2 no-scrollbar pb-2">
-            <button onclick="filtrarCategoria('')" class="whitespace-nowrap px-4 py-1.5 rounded-full border border-black text-[10px] uppercase font-bold bg-black text-white transition-all">Todos</button>
-            <button onclick="filtrarCategoria('Vestido')" class="whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Vestidos</button>
-            <button onclick="filtrarCategoria('Saia')" class="whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Saias</button>
-            <button onclick="filtrarCategoria('Blusa')" class="whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Blusas</button>
-            <button onclick="filtrarCategoria('Calça')" class="whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Calças</button>
-            <button onclick="filtrarCategoria('Acessório')" class="whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Acessórios</button>
+            <button onclick="filtrarCategoria('')" class="cat-btn whitespace-nowrap px-4 py-1.5 rounded-full border border-black text-[10px] uppercase font-bold bg-black text-white transition-all">Todos</button>
+            <button onclick="filtrarCategoria('Blusa')" class="cat-btn whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Blusas/T-shirt</button>
+            <button onclick="filtrarCategoria('Vestido')" class="cat-btn whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Vestidos</button>
+            <button onclick="filtrarCategoria('Calça')" class="cat-btn whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Calças</button>
+            <button onclick="filtrarCategoria('Saia')" class="cat-btn whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Saias/Shorts</button>
+            <button onclick="filtrarCategoria('Casaco')" class="cat-btn whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Casacos/Blazer</button>
+            <button onclick="filtrarCategoria('Acessório')" class="cat-btn whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Acessórios/Calçados</button>
+            <button onclick="filtrarCategoria('Infantil')" class="cat-btn whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-[10px] uppercase font-bold hover:border-black transition-all">Infantil</button>
         </div>
     </div>
 
     <!-- LISTA DE PRODUTOS -->
-    <main class="p-6 max-w-md mx-auto space-y-2" id="lista-produtos">
-        <!-- Inserido via JS -->
+    <main class="p-4 max-w-md mx-auto space-y-2" id="lista-produtos">
+        <!-- JS renderiza aqui -->
     </main>
 
     <!-- BARRA DE TOTAL -->
@@ -59,46 +58,82 @@
     </div>
 
     <script>
-        // LISTA DE PRODUTOS COM CATEGORIAS
+        // LISTA DE PRODUTOS IMPORTADA DO EXCEL
         const produtos = [
-            { id: 1, nome: "Blusa Lizie Seda", preco: 49.90, categoria: "Blusa" },
-            { id: 2, nome: "Calça Alfaiataria", preco: 89.90, categoria: "Calça" },
-            { id: 3, nome: "Vestido Midi Floral", preco: 120.00, categoria: "Vestido" },
-            { id: 4, nome: "Acessório Gold - Colar", preco: 25.00, categoria: "Acessório" },
-            { id: 5, nome: "Saia Plissada Off-White", preco: 75.00, categoria: "Saia" },
-            { id: 6, nome: "Vestido Curto Festa", preco: 150.00, categoria: "Vestido" },
-            { id: 7, nome: "Blusa Básica Algodão", preco: 35.00, categoria: "Blusa" },
-            { id: 8, nome: "Calça Jeans High", preco: 95.00, categoria: "Calça" }
+            { id: 1, nome: "Bata", preco: 50.00, categoria: "Blusa" },
+            { id: 2, nome: "Bermuda", preco: 60.00, categoria: "Saia" },
+            { id: 3, nome: "Blazer Cropped", preco: 60.00, categoria: "Casaco" },
+            { id: 4, nome: "Blazer Curto/ Longo/ Jaqueta", preco: 120.00, categoria: "Casaco" },
+            { id: 5, nome: "Blusa Mga Curta Tec/Tricot/Body", preco: 50.00, categoria: "Blusa" },
+            { id: 6, nome: "Blusa Mga Longa", preco: 50.00, categoria: "Blusa" },
+            { id: 7, nome: "Blusa Mini / Malha", preco: 30.00, categoria: "Blusa" },
+            { id: 8, nome: "Blusa Paete", preco: 50.00, categoria: "Blusa" },
+            { id: 9, nome: "Bota/ Bolsa", preco: 100.00, categoria: "Acessório" },
+            { id: 10, nome: "Bracelete", preco: 30.00, categoria: "Acessório" },
+            { id: 11, nome: "Brinco", preco: 30.00, categoria: "Acessório" },
+            { id: 12, nome: "Calça", preco: 100.00, categoria: "Calça" },
+            { id: 13, nome: "Calça Amarração", preco: 50.00, categoria: "Calça" },
+            { id: 14, nome: "Calça PU", preco: 130.00, categoria: "Calça" },
+            { id: 15, nome: "Calcinha", preco: 10.00, categoria: "Acessório" },
+            { id: 16, nome: "Camisa", preco: 70.00, categoria: "Blusa" },
+            { id: 17, nome: "Camisa PU", preco: 100.00, categoria: "Blusa" },
+            { id: 18, nome: "Casaco Tricot com Botão", preco: 120.00, categoria: "Casaco" },
+            { id: 19, nome: "Cinto Couro", preco: 30.00, categoria: "Acessório" },
+            { id: 20, nome: "Cinto Tecido", preco: 20.00, categoria: "Acessório" },
+            { id: 21, nome: "Colar", preco: 30.00, categoria: "Acessório" },
+            { id: 22, nome: "Colete Longo", preco: 70.00, categoria: "Casaco" },
+            { id: 23, nome: "Coletinho", preco: 50.00, categoria: "Casaco" },
+            { id: 24, nome: "Cropped Gola Alta", preco: 40.00, categoria: "Blusa" },
+            { id: 25, nome: "Cropped", preco: 20.00, categoria: "Blusa" },
+            { id: 26, nome: "Cropped/ Blusa PU", preco: 60.00, categoria: "Blusa" },
+            { id: 27, nome: "Macacão", preco: 100.00, categoria: "Macacão" },
+            { id: 28, nome: "Macaquinho", preco: 60.00, categoria: "Macacão" },
+            { id: 29, nome: "Pull Tricot", preco: 40.00, categoria: "Blusa" },
+            { id: 30, nome: "Pulseira", preco: 30.00, categoria: "Acessório" },
+            { id: 31, nome: "Rasteira", preco: 40.00, categoria: "Acessório" },
+            { id: 32, nome: "Regata", preco: 40.00, categoria: "Blusa" },
+            { id: 33, nome: "Regata Poa", preco: 20.00, categoria: "Blusa" },
+            { id: 34, nome: "Saia Curta", preco: 50.00, categoria: "Saia" },
+            { id: 35, nome: "Saia Longa", preco: 70.00, categoria: "Saia" },
+            { id: 36, nome: "Saia Paete", preco: 70.00, categoria: "Saia" },
+            { id: 37, nome: "Sandália", preco: 60.00, categoria: "Acessório" },
+            { id: 38, nome: "Short", preco: 60.00, categoria: "Saia" },
+            { id: 39, nome: "Short Poa", preco: 30.00, categoria: "Saia" },
+            { id: 40, nome: "Tricot Diversos", preco: 100.00, categoria: "Blusa" },
+            { id: 41, nome: "Tricot Diversos - Simples", preco: 70.00, categoria: "Blusa" },
+            { id: 42, nome: "Tshirt Infantil", preco: 20.00, categoria: "Infantil" },
+            { id: 43, nome: "Vestido Celebrary", preco: 80.00, categoria: "Vestido" },
+            { id: 44, nome: "Vestido Curto", preco: 60.00, categoria: "Vestido" },
+            { id: 45, nome: "Vestido Lgo/Chemise/ Kimono", preco: 100.00, categoria: "Vestido" },
+            { id: 46, nome: "Vestido Poa", preco: 30.00, categoria: "Vestido" },
+            { id: 47, nome: "Vestido PU", preco: 150.00, categoria: "Vestido" },
+            { id: 48, nome: "Vestido/ Camisa Infantil", preco: 30.00, categoria: "Infantil" }
         ];
 
         let carrinho = {};
 
-        // Função para renderizar a lista (pode receber uma lista filtrada)
         function renderizarProdutos(lista = produtos) {
             const container = document.getElementById('lista-produtos');
-            
             if (lista.length === 0) {
                 container.innerHTML = `<p class="text-center text-gray-400 py-10">Nenhum produto encontrado.</p>`;
                 return;
             }
 
             container.innerHTML = lista.map(p => `
-                <div class="product-card bg-white p-5 border-b border-gray-100 flex justify-between items-center">
-                    <div>
-                        <h3 class="font-bold text-gray-900 uppercase text-sm tracking-tight">${p.nome}</h3>
-                        <p class="text-gray-500 font-light text-xs mb-1">${p.categoria}</p>
-                        <p class="text-gray-900 font-medium">R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
+                <div class="product-card bg-white p-4 border-b border-gray-100 flex justify-between items-center">
+                    <div class="pr-2">
+                        <h3 class="font-bold text-gray-900 uppercase text-xs leading-tight">${p.nome}</h3>
+                        <p class="text-gray-900 font-medium mt-1">R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <button onclick="alterarQtd(${p.id}, -1)" class="w-8 h-8 border border-black flex items-center justify-center text-xl font-light hover:bg-black hover:text-white transition-colors">-</button>
-                        <span id="qtd-${p.id}" class="w-4 text-center font-bold text-lg">${carrinho[p.id] || 0}</span>
-                        <button onclick="alterarQtd(${p.id}, 1)" class="w-8 h-8 bg-black text-white flex items-center justify-center text-xl font-light hover:bg-gray-800 transition-colors">+</button>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="alterarQtd(${p.id}, -1)" class="w-8 h-8 border border-black flex items-center justify-center text-xl font-light active:bg-black active:text-white">-</button>
+                        <span id="qtd-${p.id}" class="w-4 text-center font-bold text-base">${carrinho[p.id] || 0}</span>
+                        <button onclick="alterarQtd(${p.id}, 1)" class="w-8 h-8 bg-black text-white flex items-center justify-center text-xl font-light active:bg-gray-700">+</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Função de busca por texto
         function filtrarProdutos() {
             const termo = document.getElementById('busca').value.toLowerCase();
             const filtrados = produtos.filter(p => 
@@ -108,19 +143,21 @@
             renderizarProdutos(filtrados);
         }
 
-        // Função de clique nas categorias
         function filtrarCategoria(categoria) {
             document.getElementById('busca').value = categoria;
             filtrarProdutos();
             
-            // Estilizar botão ativo (opcional)
-            const botoes = document.querySelectorAll('.no-scrollbar button');
+            // Atualiza estilo dos botões
+            const botoes = document.querySelectorAll('.cat-btn');
             botoes.forEach(btn => {
-                if(btn.innerText.toLowerCase() === categoria.toLowerCase() || (categoria === '' && btn.innerText === 'TODOS')) {
+                const text = btn.innerText.toLowerCase();
+                const catLower = categoria.toLowerCase();
+                if((categoria === '' && text === 'todos') || (categoria !== '' && text.includes(catLower))) {
                     btn.classList.add('bg-black', 'text-white');
-                    btn.classList.remove('text-gray-900');
+                    btn.classList.remove('border-gray-200');
                 } else {
                     btn.classList.remove('bg-black', 'text-white');
+                    btn.classList.add('border-gray-200');
                 }
             });
         }
@@ -143,14 +180,13 @@
         }
 
         function limparCarrinho() {
-            if(confirm("Deseja limpar todos os itens selecionados?")) {
+            if(confirm("Limpar lista de compras?")) {
                 carrinho = {};
-                renderizarProdutos(); // Re-renderiza para zerar os contadores visuais
+                renderizarProdutos();
                 calcularTotal();
             }
         }
 
-        // Inicialização
         renderizarProdutos();
     </script>
 </body>
