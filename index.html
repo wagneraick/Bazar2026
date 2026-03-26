@@ -3,39 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Preços - Bazar</title>
+    <title>Bazar Lizie - Calculadora</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        .cart-float { position: fixed; bottom: 20px; right: 20px; }
+        body { font-family: 'Inter', sans-serif; }
+        .product-card { transition: all 0.2s ease; }
+        .product-card:active { transform: scale(0.98); }
     </style>
 </head>
-<body class="bg-gray-100 pb-24">
-    <header class="bg-blue-600 text-white p-6 text-center shadow-lg">
-        <h1 class="text-2xl font-bold uppercase tracking-wide">Bazar da Empresa</h1>
-        <p class="text-sm opacity-80 mt-1">Simule seu valor total antes do caixa</p>
+<body class="bg-white pb-32">
+
+    <!-- HEADER COM LOGO -->
+    <header class="bg-black text-white py-8 px-6 text-center shadow-xl">
+        <!-- Substitua 'logo.png' pelo nome do arquivo da imagem que você salvou -->
+        <img src="logo.png" alt="Lizie" class="h-12 mx-auto mb-2 filter invert brightness-200">
+        <p class="text-xs uppercase tracking-[0.3em] opacity-70 font-light">Calculadora de Compras</p>
     </header>
 
-    <main class="p-4 max-w-md mx-auto space-y-4" id="lista-produtos">
-        <!-- PRODUTOS DO BAZAR (Edite aqui) -->
+    <main class="p-6 max-w-md mx-auto space-y-4" id="lista-produtos">
+        <!-- Os produtos serão inseridos aqui pelo JavaScript -->
     </main>
 
-    <!-- Barra Inferior de Total -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] flex justify-between items-center">
+    <!-- BARRA DE TOTAL (PRETO E BRANCO) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black text-white p-6 shadow-[0_-10px_20px_rgba(0,0,0,0.1)] flex justify-between items-center">
         <div>
-            <p class="text-xs text-gray-500 uppercase font-bold">Total Estimado</p>
-            <p class="text-2xl font-black text-blue-700" id="valor-total">R$ 0,00</p>
+            <p class="text-[10px] uppercase tracking-widest opacity-60">Total Estimado</p>
+            <p class="text-3xl font-black" id="valor-total">R$ 0,00</p>
         </div>
-        <button onclick="limparCarrinho()" class="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-semibold border border-red-200">Limpar</button>
+        <button onclick="limparCarrinho()" class="border border-white/30 hover:bg-white hover:text-black px-4 py-2 rounded-none text-xs uppercase tracking-widest transition-all">
+            Limpar
+        </button>
     </div>
 
     <script>
-        // ADICIONE SEUS PRODUTOS AQUI
+        // LISTA DE PRODUTOS (Edite os nomes e preços aqui)
         const produtos = [
-            { id: 1, nome: "Camiseta Algodão", preco: 25.00 },
-            { id: 2, nome: "Calça Jeans", preco: 50.00 },
-            { id: 3, nome: "Tênis Esportivo", preco: 85.00 },
-            { id: 4, nome: "Acessório Pequeno", preco: 10.00 },
-            { id: 5, nome: "Casaco Inverno", preco: 120.00 }
+            { id: 1, nome: "Blusa Lizie", preco: 49.90 },
+            { id: 2, nome: "Calça Alfaiataria", preco: 89.90 },
+            { id: 3, nome: "Vestido Midi", preco: 120.00 },
+            { id: 4, nome: "Acessório Gold", preco: 25.00 },
+            { id: 5, nome: "Saia Plissada", preco: 75.00 }
         ];
 
         let carrinho = {};
@@ -43,15 +51,15 @@
         function renderizarProdutos() {
             const container = document.getElementById('lista-produtos');
             container.innerHTML = produtos.map(p => `
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex justify-between items-center">
+                <div class="product-card bg-white p-5 border-b border-gray-100 flex justify-between items-center">
                     <div>
-                        <h3 class="font-bold text-gray-800">${p.nome}</h3>
-                        <p class="text-blue-600 font-medium">R$ ${p.preco.toFixed(2)}</p>
+                        <h3 class="font-bold text-gray-900 uppercase text-sm tracking-tight">${p.nome}</h3>
+                        <p class="text-gray-500 font-light">R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
                     </div>
-                    <div class="flex items-center space-x-3">
-                        <button onclick="alterarQtd(${p.id}, -1)" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center font-bold">-</button>
-                        <span id="qtd-${p.id}" class="w-6 text-center font-bold">0</span>
-                        <button onclick="alterarQtd(${p.id}, 1)" class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold">+</button>
+                    <div class="flex items-center space-x-4">
+                        <button onclick="alterarQtd(${p.id}, -1)" class="w-8 h-8 border border-black flex items-center justify-center text-xl font-light hover:bg-black hover:text-white transition-colors">-</button>
+                        <span id="qtd-${p.id}" class="w-4 text-center font-bold text-lg">0</span>
+                        <button onclick="alterarQtd(${p.id}, 1)" class="w-8 h-8 bg-black text-white flex items-center justify-center text-xl font-light hover:bg-gray-800 transition-colors">+</button>
                     </div>
                 </div>
             `).join('');
@@ -74,9 +82,14 @@
         }
 
         function limparCarrinho() {
-            carrinho = {};
-            produtos.forEach(p => document.getElementById(`qtd-${p.id}`).innerText = "0");
-            calcularTotal();
+            if(confirm("Deseja limpar todos os itens selecionados?")) {
+                carrinho = {};
+                produtos.forEach(p => {
+                    const el = document.getElementById(`qtd-${p.id}`);
+                    if(el) el.innerText = "0";
+                });
+                calcularTotal();
+            }
         }
 
         renderizarProdutos();
