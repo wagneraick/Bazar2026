@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Preços - Bazar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .cart-float { position: fixed; bottom: 20px; right: 20px; }
+    </style>
+</head>
+<body class="bg-gray-100 pb-24">
+    <header class="bg-blue-600 text-white p-6 text-center shadow-lg">
+        <h1 class="text-2xl font-bold uppercase tracking-wide">Bazar da Empresa</h1>
+        <p class="text-sm opacity-80 mt-1">Simule seu valor total antes do caixa</p>
+    </header>
+
+    <main class="p-4 max-w-md mx-auto space-y-4" id="lista-produtos">
+        <!-- PRODUTOS DO BAZAR (Edite aqui) -->
+    </main>
+
+    <!-- Barra Inferior de Total -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] flex justify-between items-center">
+        <div>
+            <p class="text-xs text-gray-500 uppercase font-bold">Total Estimado</p>
+            <p class="text-2xl font-black text-blue-700" id="valor-total">R$ 0,00</p>
+        </div>
+        <button onclick="limparCarrinho()" class="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-semibold border border-red-200">Limpar</button>
+    </div>
+
+    <script>
+        // ADICIONE SEUS PRODUTOS AQUI
+        const produtos = [
+            { id: 1, nome: "Camiseta Algodão", preco: 25.00 },
+            { id: 2, nome: "Calça Jeans", preco: 50.00 },
+            { id: 3, nome: "Tênis Esportivo", preco: 85.00 },
+            { id: 4, nome: "Acessório Pequeno", preco: 10.00 },
+            { id: 5, nome: "Casaco Inverno", preco: 120.00 }
+        ];
+
+        let carrinho = {};
+
+        function renderizarProdutos() {
+            const container = document.getElementById('lista-produtos');
+            container.innerHTML = produtos.map(p => `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-gray-800">${p.nome}</h3>
+                        <p class="text-blue-600 font-medium">R$ ${p.preco.toFixed(2)}</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="alterarQtd(${p.id}, -1)" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center font-bold">-</button>
+                        <span id="qtd-${p.id}" class="w-6 text-center font-bold">0</span>
+                        <button onclick="alterarQtd(${p.id}, 1)" class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function alterarQtd(id, delta) {
+            carrinho[id] = (carrinho[id] || 0) + delta;
+            if (carrinho[id] < 0) carrinho[id] = 0;
+            
+            document.getElementById(`qtd-${id}`).innerText = carrinho[id];
+            calcularTotal();
+        }
+
+        function calcularTotal() {
+            let total = 0;
+            produtos.forEach(p => {
+                total += (carrinho[p.id] || 0) * p.preco;
+            });
+            document.getElementById('valor-total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        function limparCarrinho() {
+            carrinho = {};
+            produtos.forEach(p => document.getElementById(`qtd-${p.id}`).innerText = "0");
+            calcularTotal();
+        }
+
+        renderizarProdutos();
+    </script>
+</body>
+</html>
