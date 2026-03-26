@@ -5,47 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bazar Lizie - Calculadora</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #ffffff; }
-        .product-card { border-bottom: 1px solid #f0f0f0; }
-        /* Força a logo a ficar preta para o tema B&W */
-        .logo-black { filter: brightness(0); }
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #000; }
+        
+        /* Estilização para garantir que o SVG fique preto e responsivo */
+        .logo-container svg {
+            width: auto;
+            height: 40px; /* Ajuste a altura conforme necessário */
+            margin: 0 auto;
+            display: block;
+            fill: #000000; /* Força a cor preta no SVG */
+        }
+
+        .product-row { border-bottom: 1px solid #eeeeee; }
+        .btn-action { transition: all 0.2s; border: 1px solid #000; }
+        .btn-action:active { transform: scale(0.9); background-color: #000; color: #fff; }
     </style>
 </head>
 <body class="pb-32">
 
-    <!-- HEADER BRANCO COM LOGO PRETA -->
-    <header class="bg-white pt-10 pb-6 px-6 text-center border-b border-gray-100">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAADD8S9WAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAALySURBVHgB7d0/SBRRGMDx966IIDpIsIsitSQu0SAt7S0R7S0t0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAt0SAuRfoPgPzT/G1Y6qAAAAAElFTkSuQmCC" 
-             alt="Lizie" class="h-10 mx-auto logo-black">
-        <p class="text-[10px] uppercase tracking-[0.4em] text-gray-400 mt-4 font-light">Calculadora de Preços</p>
+    <!-- HEADER -->
+    <header class="py-10 px-6 text-center bg-white border-b border-gray-100">
+        <div class="logo-container mb-2">
+            
+            <!-- vvv COLE O CÓDIGO DO SEU SVG AQUI vvv -->
+            <svg viewBox="0 0 100 20">
+                <text x="0" y="15" font-family="serif" font-weight="bold" font-size="16">LIZIE</text>
+            </svg>
+            <!-- ^^^ COLE O CÓDIGO DO SEU SVG AQUI ^^^ -->
+
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.5em] text-gray-400 font-light">Calculadora de Compras</p>
     </header>
 
-    <main class="max-w-md mx-auto" id="lista-produtos">
-        <!-- Produtos injetados aqui -->
+    <!-- LISTA DE PRODUTOS -->
+    <main class="max-w-md mx-auto px-4" id="lista-produtos">
+        <!-- Gerado via JS -->
     </main>
 
-    <!-- BARRA DE TOTAL FIXA -->
-    <div class="fixed bottom-0 left-0 right-0 bg-black text-white p-6 flex justify-between items-center shadow-2xl">
+    <!-- RODAPÉ TOTALIZADOR -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black text-white p-6 shadow-2xl flex justify-between items-center">
         <div>
-            <p class="text-[9px] uppercase tracking-widest opacity-50 mb-1">Subtotal</p>
-            <p class="text-3xl font-bold" id="valor-total">R$ 0,00</p>
+            <p class="text-[9px] uppercase tracking-widest opacity-60 mb-1">Total da sua sacola</p>
+            <p class="text-3xl font-extrabold" id="valor-total">R$ 0,00</p>
         </div>
-        <button onclick="limparCarrinho()" class="text-[10px] uppercase tracking-widest border border-white/20 px-4 py-2 hover:bg-white hover:text-black transition-all">
+        <button onclick="limparCarrinho()" class="text-[10px] font-bold uppercase tracking-widest border border-white/30 px-4 py-2 hover:bg-white hover:text-black transition-all">
             Limpar
         </button>
     </div>
 
     <script>
-        // LISTA DE PRODUTOS LIZIE (Altere os preços abaixo)
+        // LISTA DE PRODUTOS (Edite nomes e preços aqui)
         const produtos = [
-            { id: 1, nome: "T-Shirt Básica", preco: 39.90 },
-            { id: 2, nome: "Calça Alfaiataria", preco: 129.00 },
-            { id: 3, nome: "Vestido Longo", preco: 189.00 },
-            { id: 4, nome: "Blazer Estruturado", preco: 250.00 },
-            { id: 5, nome: "Saia Midi", preco: 89.00 },
-            { id: 6, nome: "Acessórios", preco: 29.00 }
+            { id: 1, nome: "T-Shirt Premium", preco: 49.90 },
+            { id: 2, nome: "Calça Alfaiataria", preco: 139.00 },
+            { id: 3, nome: "Vestido Midi", preco: 159.00 },
+            { id: 4, nome: "Blusa Sedinha", preco: 79.90 },
+            { id: 5, nome: "Saia Plissada", preco: 98.00 },
+            { id: 6, nome: "Acessórios", preco: 25.00 },
+            { id: 7, nome: "Peça Outlet", preco: 35.00 }
         ];
 
         let carrinho = {};
@@ -53,15 +72,15 @@
         function renderizarProdutos() {
             const container = document.getElementById('lista-produtos');
             container.innerHTML = produtos.map(p => `
-                <div class="product-card p-6 flex justify-between items-center">
+                <div class="product-row py-6 flex justify-between items-center">
                     <div>
-                        <h3 class="font-semibold text-gray-900 uppercase text-xs tracking-wider">${p.nome}</h3>
-                        <p class="text-gray-400 font-light text-sm mt-1">R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
+                        <h3 class="font-semibold text-xs uppercase tracking-wider text-gray-800">${p.nome}</h3>
+                        <p class="text-gray-400 font-light text-sm mt-0.5">R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
                     </div>
-                    <div class="flex items-center space-x-5">
-                        <button onclick="alterarQtd(${p.id}, -1)" class="w-8 h-8 flex items-center justify-center border border-gray-200 text-gray-400 hover:border-black hover:text-black">-</button>
+                    <div class="flex items-center space-x-6">
+                        <button onclick="alterarQtd(${p.id}, -1)" class="w-8 h-8 flex items-center justify-center btn-action text-xl font-light">-</button>
                         <span id="qtd-${p.id}" class="w-4 text-center font-bold text-sm">0</span>
-                        <button onclick="alterarQtd(${p.id}, 1)" class="w-8 h-8 bg-black text-white flex items-center justify-center hover:bg-gray-800">+</button>
+                        <button onclick="alterarQtd(${p.id}, 1)" class="w-8 h-8 bg-black text-white flex items-center justify-center text-xl font-light">+</button>
                     </div>
                 </div>
             `).join('');
@@ -83,9 +102,12 @@
         }
 
         function limparCarrinho() {
-            if(confirm("Limpar sua simulação?")) {
+            if(confirm("Deseja zerar sua calculadora?")) {
                 carrinho = {};
-                produtos.forEach(p => document.getElementById(`qtd-${p.id}`).innerText = "0");
+                produtos.forEach(p => {
+                    const el = document.getElementById(`qtd-${p.id}`);
+                    if(el) el.innerText = "0";
+                });
                 calcularTotal();
             }
         }
